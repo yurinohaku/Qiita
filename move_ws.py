@@ -35,8 +35,9 @@ def get_wslist():
     cmd = 'i3-msg -t get_workspaces'
     active_wsjson = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE).stdout
     active_wslist = [d.get('name') for d in json.loads(active_wsjson)]
+    active_wslist = [n for n in active_wslist if not n in base_wslist]
 
-    ws_list = sorted(set(base_wslist + active_wslist))
+    ws_list = base_wslist + active_wslist
     return ws_list
 
 
